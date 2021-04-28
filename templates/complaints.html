@@ -4,27 +4,23 @@
 <div class="wrapper">
 
 
-    {% for complaint in complaints %}
-        {{ complaint.category_name }}<br>
-        {{ complaint.complaint_subject }}<br>
-        {{ complaint.complaint_description }}<br>
-        {{ complaint.is_urgent }}<br>
-        {{ complaint.date_of_complaint }}<br>
-    {% endfor %}
-
     <ul class="collapsible">
+        {% for complaint in complaints %}
         <li>
-            <div class="collapsible-header white-text grey darken-3 text-shadow"><i class="fas fa-caret-down"></i>First</div>
-            <div class="collapsible-body black-text white"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-header white-text grey darken-3 text-shadow">
+                <i class="fas fa-caret-down"></i>
+                <strong>{{ complaint.category_name }}</strong> : {{ complaint.date_of_complaint }}
+                {% if complaint.is_urgent == "on" %}
+                    <i class="fas fa-exclamation-circle white-text tooltipped"
+                        data-position="right" data-tooltip="URGENT"></i>
+                {% endif %}
+            </div>
+            <div class="collapsible-body black-text white">
+                <strong>{{ complaint.complaint_subject }}</strong>
+                <p>{{ complaint.complaint_description }}</p>
+            </div>
         </li>
-        <li>
-            <div class="collapsible-header white-text grey darken-3 text-shadow"><i class="fas fa-caret-down"></i>Second</div>
-            <div class="collapsible-body black-text white"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
-        <li>
-            <div class="collapsible-header white-text grey darken-3 text-shadow"><i class="fas fa-caret-down"></i>Third</div>
-            <div class="collapsible-body black-text white"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
+        {% endfor %}
     </ul>
 
 </div>
