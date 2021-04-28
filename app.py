@@ -101,7 +101,8 @@ def logout():
 
 @app.route("/add_complaint")
 def add_complaint():
-    return render_template("add_complaint.html")
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template("add_complaint.html", categories=categories)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
