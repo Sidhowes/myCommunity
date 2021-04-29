@@ -9,12 +9,18 @@
         {% for complaint in complaints %}
         <li>
             <div class="collapsible-header white-text grey darken-3 text-shadow">
-                <i class="fas fa-caret-down"></i>
-                <strong>{{ complaint.category_name }}</strong> : {{ complaint.date_of_complaint }}
+                <div class="col s3">
+                    <i class="fas fa-caret-down"></i>
+                    <a href="" class="btn-small green accent-4">Closed</a>
+                    <a href="" class="btn-small blue lighten-3">Edit</a>
+                </div>
+                <div class="col s9">
+                    <strong>{{ complaint.category_name }}</strong> : {{ complaint.date_of_complaint }}
                 {% if complaint.is_urgent == "on" %}
                     <i class="fas fa-exclamation-circle white-text tooltipped"
                         data-position="right" data-tooltip="URGENT"></i>
                 {% endif %}
+                </div>
             </div>
             <div class="collapsible-body black-text white">
                 <strong>{{ complaint.complaint_subject }}</strong>
