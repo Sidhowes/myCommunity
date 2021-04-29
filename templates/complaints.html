@@ -3,6 +3,7 @@
 
 <div class="wrapper">
 
+    <h3 class="white-text center-align">All Complaints</h3>
 
     <ul class="collapsible">
         {% for complaint in complaints %}
@@ -18,6 +19,7 @@
             <div class="collapsible-body black-text white">
                 <strong>{{ complaint.complaint_subject }}</strong>
                 <p>{{ complaint.complaint_description }}</p>
+                <p><em>by: {{ complaint.created_by }}</em></p>
             </div>
         </li>
         {% endfor %}

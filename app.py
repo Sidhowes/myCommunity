@@ -99,8 +99,22 @@ def logout():
     return redirect(url_for("login"))
     
 
-@app.route("/add_complaint")
+@app.route("/add_complaint", methods=["GET", "POST"])
 def add_complaint():
+    if request.method == "POST":
+        is_urgent = "on" if request.form.get("is_urgent") else "off"
+        complaint = {
+            "category_name": request.form.get("category_name"),
+            "complaint_subject": request.form.get("complaint_subject"),
+            "complaint_description": request.form.get("complaint_description"),
+            "is_urgent": is_urgent,
+            "date_of_complaint": request.form.get("date_of_complaint"),
+            "created_by": session["user"]
+        }
+        mongo.db.complaints.insert_one(complaint)
+        flash("Complaint Successfully Submitted")
+        return redirect(url_for("get_complaints"))
+
     categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template("add_complaint.html", categories=categories)
 
