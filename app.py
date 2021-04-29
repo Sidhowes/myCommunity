@@ -121,8 +121,21 @@ def add_complaint():
 
 @app.route("/edit_complaint/<complaint_id>", methods=["GET", "POST"])
 def edit_complaint(complaint_id):
-    complaint = mongo.db.complaints.find_one({"_id":ObjectId(complaint_id)})
+    if request.method == "POST":
+        is_urgent = "on" if request.form.get("is_urgent") else "off"
+        submit = {
+            "category_name": request.form.get("category_name"),
+            "complaint_subject": request.form.get("complaint_subject"),
+            "complaint_description": request.form.get("complaint_description"),
+            "is_urgent": is_urgent,
+            "date_of_complaint": request.form.get("date_of_complaint"),
+            "created_by": session["user"]
+        }
+        mongo.db.complaints.update({"_id": ObjectId(complaint_id)}, submit)
+        flash("Complaint Successfully Updated")
+        return redirect(url_for("get_complaints"))
 
+    complaint = mongo.db.complaints.find_one({"_id": ObjectId(complaint_id)})
     categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template("edit_complaint.html", complaint=complaint, categories=categories)
 
