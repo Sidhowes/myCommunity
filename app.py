@@ -140,6 +140,13 @@ def edit_complaint(complaint_id):
     return render_template("edit_complaint.html", complaint=complaint, categories=categories)
 
 
+@app.route("/delete_complaint/<complaint_id>")
+def delete_complaint(complaint_id):
+    mongo.db.complaints.remove({"_id": ObjectId(complaint_id)})
+    flash("Complaint Successfully Deleted")
+    return redirect(url_for("get_complaints"))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
