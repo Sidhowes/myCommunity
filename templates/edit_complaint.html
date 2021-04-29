@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="wrapper">
+
+    <h3 class="white-text center-align">Edit Complaint</h3>
+
+    <div class="row card-panel grey darken-3">
+        <form class="col s12" method="POST" action="{{ url_for('edit_complaint', complaint_id=complaint._id) }}">
+            <!--department selection-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-folder-open prefix white-text"></i>
+                    <select id="category_name" name="category_name" class="validate" required>
+                        <option value="" disabled selected>Choose Department</option>
+                        {% for category in categories %}
+                            <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="category_name">Complaint Department</label>
+                </div>
+            </div>
+            <!--complaint subject-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-user-circle prefix white-text"></i>
+                    <input id="complaint_subject" name="complaint_subject" minlength="5" maxlength="50"
+                        type="text" class="validate" required>
+                    <label for="complaint_subject">Subject</label>
+                </div>
+            </div>
+            <!--complaint description-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-align-left prefix white-text"></i>
+                    <textarea id="complaint_description" name="complaint_description" minlength="5"
+                        maxlength="1000" class="materialize-textarea white-text validate" required></textarea>
+                    <label for="complaint_description">Complaint Description</label>
+                </div>
+            </div>
+            <!--date of complaint-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-calendar-alt prefix white-text"></i>
+                    <input id="date_of_complaint" name="date_of_complaint" type="text" class=" datepicker validate" required>
+                    <label for="date_of_complaint">Date Of Complaint</label>
+                </div>
+            </div>
+            <!--is_urgent-->
+            <div class="row">
+                <div class="input-fiel col s12">
+                    <div class="switch">
+                        <i class="fas fa-exclamation-circle prefix white-text"></i>
+                        <label for="is_urgent">
+                            <input type="checkbox" id="is_urgent" name="is_urgent">
+                            <span class="lever"></span>
+                            Is Urgent
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!--submit btn-->
+            <div class="row">
+                <div class="col s12 center-align">
+                    <button type="submit" class="btn-large white black-text text-shadow">
+                        Edit Complaint <i class="fas fa-edit right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

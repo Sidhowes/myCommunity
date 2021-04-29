@@ -118,6 +118,15 @@ def add_complaint():
     categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template("add_complaint.html", categories=categories)
 
+
+@app.route("/edit_complaint/<complaint_id>", methods=["GET", "POST"])
+def edit_complaint(complaint_id):
+    complaint = mongo.db.complaints.find_one({"_id":ObjectId(complaint_id)})
+
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template("edit_complaint.html", complaint=complaint, categories=categories)
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
