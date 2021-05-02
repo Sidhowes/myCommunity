@@ -21,9 +21,13 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_complaints")
 def get_complaints():
-    complaints = list(mongo.db.complaints.find())
-
-    return render_template("complaints.html", complaints=complaints)
+    category = request.args.get('category')
+    if not category:
+        complaints = list(mongo.db.complaints.find())
+    else:
+        complaints = list(mongo.db.complaints.find({"category_name": category}))
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template("complaints.html", complaints=complaints, categories=categories)
 
 
 @app.route("/register", methods=["GET", "POST"])

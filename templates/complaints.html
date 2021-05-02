@@ -5,6 +5,18 @@
 
     <h3 class="white-text center-align">All Complaints</h3>
 
+    <div class="input-field col s12">
+        <a class="dropdown-trigger btn-large white black-text text-shadow" name="category_name" id="category_name" href="#" data-target="dropdown1">Choose Category</a>
+        <!-- Dropdown Structure -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a href="/get_complaints#all_complaints">All Complaints</a></li>
+            <li><a href="/get_complaints?category=Customer Services#customer_services">Customer Services</a></li>
+            <li><a href="/get_complaints?category=Regulatory#regulatory">regulatory</a></li>
+            <li><a href="/get_complaints?category=Finance#finanace">Finance</a></li>
+            <li><a href="/get_complaints?category=Business#business">Business</a></li>
+        </ul>
+    </div>
+
     <ul class="collapsible">
         {% for complaint in complaints %}
         <li>
