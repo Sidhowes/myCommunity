@@ -105,6 +105,7 @@ def add_complaint():
             "is_urgent": is_urgent,
             "date_of_complaint": request.form.get("date_of_complaint"),
             "response": request.form.get("response"),
+            "date_complaint_closed": request.form.get("date_complaint_closed"),
             "is_closed": is_closed,
             "created_by": session["user"]
         }
@@ -130,6 +131,7 @@ def edit_complaint(complaint_id):
             "is_urgent": is_urgent,
             "date_of_complaint": request.form.get("date_of_complaint"),
             "response": request.form.get("response"),
+            "date_complaint_closed": request.form.get("date_complaint_closed"),
             "is_closed": is_closed,
             "created_by": session["user"]
         }
