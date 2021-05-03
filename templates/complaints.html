@@ -29,11 +29,15 @@
                     {% endif %}
                 </div>
                 <div class="col s9">
-                    <strong>{{ complaint.category_name }}</strong> : {{ complaint.date_of_complaint }}
+                    <strong>{{ complaint.category_name }} : {{ complaint.full_name }}</strong> : {{ complaint.date_of_complaint }}
                 {% if complaint.is_urgent == "on" %}
                     <i class="fas fa-exclamation-circle white-text tooltipped"
                         data-position="right" data-tooltip="URGENT"></i>
                 {% endif %}
+                {% if complaint.is_closed =="on" %}
+                    <i class="fas fa-minus-circle red-text tooltipped"
+                        data-position="right" data-tooltip="CLOSED"></i>
+                    {% endif %}
                 </div>
             </div>
             <div class="collapsible-body black-text white">

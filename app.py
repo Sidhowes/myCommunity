@@ -49,7 +49,7 @@ def register():
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
         flash("Registration Sucessful")
-        return redirect(url_for("profile", username=session["user"]))
+        return redirect(url_for("login", username=session["user"]))
 
     return render_template("register.html")
 
@@ -69,7 +69,7 @@ def login():
                     flash("Welcome, {}".format(
                         request.form.get("username")))
                     return redirect(url_for(
-                        "profile", username=session["user"]))
+                        "add_complaint", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password")
@@ -81,18 +81,6 @@ def login():
             return redirect(url_for("login"))
 
     return render_template("login.html")
-
-
-@app.route("/profile/<username>", methods=["GET", "POST"])
-def profile(username):
-    #grab the session user's username from the db
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-
-    if session["user"]:
-        return render_template("profile.html", username=username)
-
-    return redirect(url_for("login"))
 
 
 @app.route("/logout")
@@ -107,12 +95,17 @@ def logout():
 def add_complaint():
     if request.method == "POST":
         is_urgent = "on" if request.form.get("is_urgent") else "off"
+        is_closed = "on" if request.form.get("is_closed") else "off"
         complaint = {
             "category_name": request.form.get("category_name"),
+            "full_name": request.form.get("full_name"),
+            "tel_number": request.form.get("tel_number"),
             "complaint_subject": request.form.get("complaint_subject"),
             "complaint_description": request.form.get("complaint_description"),
             "is_urgent": is_urgent,
             "date_of_complaint": request.form.get("date_of_complaint"),
+            "response": request.form.get("response"),
+            "is_closed": is_closed,
             "created_by": session["user"]
         }
         mongo.db.complaints.insert_one(complaint)
@@ -127,12 +120,17 @@ def add_complaint():
 def edit_complaint(complaint_id):
     if request.method == "POST":
         is_urgent = "on" if request.form.get("is_urgent") else "off"
+        is_closed = "on" if request.form.get("is_closed") else "off"
         submit = {
             "category_name": request.form.get("category_name"),
+            "full_name": request.form.get("full_name"),
+            "tel_number": request.form.get("tel_number"),
             "complaint_subject": request.form.get("complaint_subject"),
             "complaint_description": request.form.get("complaint_description"),
             "is_urgent": is_urgent,
             "date_of_complaint": request.form.get("date_of_complaint"),
+            "response": request.form.get("response"),
+            "is_closed": is_closed,
             "created_by": session["user"]
         }
         mongo.db.complaints.update({"_id": ObjectId(complaint_id)}, submit)

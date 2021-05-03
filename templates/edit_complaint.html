@@ -24,6 +24,24 @@
                     <label for="category_name">Complaint Department</label>
                 </div>
             </div>
+            <!--First Name-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-user-circle prefix white-text"></i>
+                    <input id="full_name" name="full_name" minlength="5" maxlength="50"
+                        type="text" value="{{ complaint.full_name }}" class="validate" required>
+                    <label for="full_name">Full Name</label>
+                </div>
+            </div>
+            <!--Tell Number-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-phone-alt prefix white-text"></i>
+                    <input id="tel_number" name="tel_number" minlength="5" maxlength="50"
+                        type="tel" value="{{ complaint.tel_number }}" class="validate" required>
+                    <label for="tel_number">Telephone</label>
+                </div>
+            </div>
             <!--complaint subject-->
             <div class="row">
                 <div class="input-field col s12">
@@ -66,6 +84,28 @@
                             {% endif %}
                             <span class="lever"></span>
                             Is Urgent
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!--complaint response-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="fas fa-align-left prefix white-text"></i>
+                    <textarea id="response" name="response" minlength="5"
+                        maxlength="1000" class="materialize-textarea white-text validate" required></textarea>
+                    <label for="response">Complaint Response</label>
+                </div>
+            </div>
+            <!--is_closed-->
+            <div class="row">
+                <div class="input-fiel col s12">
+                    <div class="switch">
+                        <i class="fas fa-minus-circle prefix red-text"></i>
+                        <label for="is_closed">
+                            <input type="checkbox" id="is_closed" name="is_closed">
+                            <span class="lever"></span>
+                            Is Closed
                         </label>
                     </div>
                 </div>
