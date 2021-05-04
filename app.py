@@ -30,6 +30,13 @@ def get_complaints():
     return render_template("complaints.html", complaints=complaints, categories=categories)
 
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    query = request.form.get("query")
+    complaints = list(mongo.db.complaints.find({"$text": {"$search": query}}))
+    return render_template("complaints.html", complaints=complaints)
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":

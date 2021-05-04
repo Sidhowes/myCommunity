@@ -4,19 +4,41 @@
 <div class="wrapper">
 
     <h3 class="white-text center-align">All Complaints</h3>
+    
+    {% if session.user|lower == "admin"|lower %}
+        <div class="row card-panel grey darken-3 white-text">
+            <form action="{{ url_for('search') }}" method="post" class="col s12">
+                <div class="row valign-wrapper center-align">
+                    <div class="input-field col s12 m8">
+                        <i class="fas fa-search prefix white-text"></i>
+                        <input type="text" name="query" id="query" minlength="3" class="validate" required>
+                        <label for="query">Search Complaints</label>
+                    </div>
+                    <div class="col s12 m4">
+                        <a href="{{ url_for('get_complaints') }}" class="red btn text-shadow">Reset</a>
+                        <button type="submit" class=" btn white black-text">
+                            <i class="fas fa-search left"></i> Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-    <div class="input-field col s12">
-        <a class="dropdown-trigger btn-large white black-text text-shadow" name="category_name" id="category_name" href="#" data-target="dropdown1">Choose Category</a>
-        <!-- Dropdown Structure -->
-        <ul id="dropdown1" class="dropdown-content">
-            <li><a href="/get_complaints#all_complaints">All Complaints</a></li>
-            <li><a href="/get_complaints?category=Customer Services#customer_services">Customer Services</a></li>
-            <li><a href="/get_complaints?category=Regulatory#regulatory">regulatory</a></li>
-            <li><a href="/get_complaints?category=Finance#finanace">Finance</a></li>
-            <li><a href="/get_complaints?category=Business#business">Business</a></li>
-        </ul>
-    </div>
+        <div class="input-field col s12">
+            <a class="dropdown-trigger btn-large white black-text text-shadow" name="category_name" id="category_name" href="#" data-target="dropdown1">Choose Department</a>
+            <!-- Dropdown Structure -->
+            <ul id="dropdown1" class="dropdown-content">
+                <li><a href="/get_complaints#all_complaints">All Complaints</a></li>
+                <li><a href="/get_complaints?category=Customer Services#customer_services">Customer Services</a></li>
+                <li><a href="/get_complaints?category=Regulatory#regulatory">regulatory</a></li>
+                <li><a href="/get_complaints?category=Finance#finanace">Finance</a></li>
+                <li><a href="/get_complaints?category=Business#business">Business</a></li>
+                <li><a href="/get_complaints?category=Management#management">Management</a></li>
+            </ul>
+        </div>
+    {% endif %}
 
+    {% if complaints|length > 0 %}
     <ul class="collapsible">
         {% for complaint in complaints %}
         <li>
@@ -25,8 +47,8 @@
                     <div class="col s3">
                         <i class="fas fa-caret-down"></i>
                         {% if session.user|lower == "admin"|lower %}
-                            <a href="{{ url_for('delete_complaint', complaint_id=complaint._id) }}" class="btn-small green accent-4">Delete</a>
-                            <a href="{{ url_for('edit_complaint', complaint_id=complaint._id) }}" class="btn-small blue lighten-3">Edit</a>
+                            <a href="{{ url_for('delete_complaint', complaint_id=complaint._id) }}" class="btn-small red accent-4">Delete</a>
+                            <a href="{{ url_for('edit_complaint', complaint_id=complaint._id) }}" class="btn-small white black-text">Update</a>
                         {% endif %}
                     </div>
                     <div class="col s9">
@@ -34,11 +56,14 @@
                     {% if complaint.is_urgent == "on" %}
                         <i class="fas fa-exclamation-circle white-text tooltipped"
                             data-position="right" data-tooltip="URGENT"></i>
+                    {% else %}
+                        <i class="fas fa-spinner white-text tooltipped"
+                            data-position="right" data-tooltip="QUEUE"></i>
                     {% endif %}
                     {% if complaint.is_closed =="on" %}
                         <i class="fas fa-minus-circle red-text tooltipped"
                             data-position="right" data-tooltip="CLOSED"></i>
-                        {% endif %}
+                    {% endif %}
                     </div>
                 </div>
                 <div class="collapsible-body black-text white">
@@ -52,7 +77,9 @@
         </li>
         {% endfor %}
     </ul>
-
+    {% else %}
+        <h3 class=" grey darken-3 red-text center-align">No Results Found</h3>
+    {% endif %}
 </div>
 
 {% endblock %}
