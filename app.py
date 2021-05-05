@@ -142,7 +142,22 @@ def edit_complaint(complaint_id):
             "is_closed": is_closed,
             "created_by": session["user"]
         }
-        mongo.db.complaints.update({"_id": ObjectId(complaint_id)}, submit)
+        mongo.db.complaints.update({"_id": ObjectId(complaint_id)},
+        { 
+            '$set': {   
+                "category_name": request.form.get("category_name"),
+                "full_name": request.form.get("full_name"),
+                "tel_number": request.form.get("tel_number"),
+                "complaint_subject": request.form.get("complaint_subject"),
+                "complaint_description": request.form.get("complaint_description"),
+                "is_urgent": is_urgent,
+                "date_of_complaint": request.form.get("date_of_complaint"),
+                "response": request.form.get("response"),
+                "date_complaint_closed": request.form.get("date_complaint_closed"),
+                "is_closed": is_closed,
+            }
+        })
+
         flash("Complaint Successfully Updated")
         return redirect(url_for("get_complaints"))
 
