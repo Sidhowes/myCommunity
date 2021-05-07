@@ -17,11 +17,12 @@
         <!--top nav-->
         <nav class="nav-extended text-shadow grey darken-3">
             <div class="nav-wrapper">
-                <a href="{{ url_for('login') }}" class="brand-logo">myCommunity</a>
+                <a href="{{ url_for('index') }}" class="brand-logo">myCommunity</a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
                     {% if session.user %}
-                        <li><a href="{{ url_for('get_complaints') }}">Home</a></li>
+                        <li><a href="{{ url_for('get_complaints') }}">Complaints</a></li>
                         <li><a href="{{ url_for('add_complaint') }}">Create Ticket</a></li>
                         {% if session.user|lower == "admin"|lower %}
                             <li><a href="{{ url_for('get_categories') }}">Manage Departments</a></li>
@@ -38,8 +39,9 @@
         <!--mobile nav-->
         <ul class="sidenav" id="mobile-demo">
             <li><h4 class="center-align light-grey-text">myCommunity</h4></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
             {% if session.user %}
-            <li><a href="{{ url_for('get_complaints') }}">Home</a></li>
+                <li><a href="{{ url_for('get_complaints') }}">Complaints</a></li>
                 <li><a href="{{ url_for('add_complaint') }}">Create Ticket</a></li>
                 {% if session.user|lower == "admin"|lower %}
                     <li><a href="{{ url_for('get_categories') }}">Manage Departments</a></li>

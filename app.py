@@ -19,6 +19,11 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
+@app.route("/home")
+def index():
+    return render_template("index.html")
+
+
 @app.route("/get_complaints")
 def get_complaints():
     category = request.args.get('category')
@@ -76,7 +81,7 @@ def login():
                     flash("Welcome, {}".format(
                         request.form.get("username")))
                     return redirect(url_for(
-                        "add_complaint", username=session["user"]))
+                        "index", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password")
@@ -117,7 +122,7 @@ def add_complaint():
             "created_by": session["user"]
         }
         mongo.db.complaints.insert_one(complaint)
-        flash("Complaint Successfully Submitted")
+        flash("Complaint Successfully Submitted, You Are Now In A Queue ")
         return redirect(url_for("get_complaints"))
 
     categories = mongo.db.categories.find().sort("category_name", 1)
@@ -143,7 +148,7 @@ def edit_complaint(complaint_id):
             "created_by": session["user"]
         }
         mongo.db.complaints.update({"_id": ObjectId(complaint_id)},
-        { 
+        {
             '$set': {   
                 "category_name": request.form.get("category_name"),
                 "full_name": request.form.get("full_name"),
